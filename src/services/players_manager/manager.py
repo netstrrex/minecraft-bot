@@ -1,5 +1,7 @@
 import asyncio
 import json
+import os.path
+from typing import Any
 
 import aiofiles
 
@@ -11,11 +13,15 @@ class PlayerManager:
         self._file_lock = asyncio.Lock()
         self._file_path = BASE_DIR / "players.json"
 
-    async def _read(self) -> dict:
+    async def _read(self) -> dict[str, list[Any]]:
+        if not os.path.exists(BASE_DIR / "players.json"):
+            data: dict[str, Any] = {"players": []}
+            await self._write(data)
+            return data
         async with self._file_lock:
             async with aiofiles.open(self._file_path) as file:
-                data = await file.read()
-        return json.loads(data)
+                data = json.loads(await file.read())
+        return data
 
     async def _write(self, data: dict) -> None:
         async with self._file_lock:
@@ -50,5 +56,4 @@ class PlayerManager:
         for player in data["players"]:
             if player["telegram_id"] == telegram_id:
                 nick = player["nick"]
-
         return nick
