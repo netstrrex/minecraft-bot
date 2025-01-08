@@ -13,7 +13,7 @@ class BotSettings(BaseModel):
 class MinecraftServerSettings(BaseModel):
     ip: str = "127.0.0.1"
     rcon_port: int = 25575
-    rcon_password: str = "1111"
+    rcon_password: str = "111"
 
 
 class Settings(BaseSettings):

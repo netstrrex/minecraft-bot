@@ -1,0 +1,34 @@
+services:
+
+  minecraft_server:
+    container_name: minecraft_server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "25565:25565"
+      - "25575:25575"
+    volumes:
+      - ./data:/usr/src/minecraft
+    networks:
+      - rcon_network
+    restart: always
+
+  rcon_bot:
+    container_name: rcon_bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      APP__BOT__TOKEN: ${APP__BOT__TOKEN}
+      APP__MINECRAFT_SERVER__IP: ${APP__MINECRAFT_SERVER__IP}
+    volumes:
+      - ./src/players.json:/app/players.json
+    networks:
+      - rcon_network
+    depends_on:
+      - minecraft_server
+
+networks:
+  rcon_network:
+    driver: bridge

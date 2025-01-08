@@ -19,6 +19,9 @@ class MinecraftRcon:
         )
         return result
 
+    async def creative(self, player_nick: str) -> None:
+        await self._request("gamemode", "creative", player_nick)
+
     async def health(self, player_nick: str) -> None:
         await self._request(
             "effect",
@@ -26,15 +29,7 @@ class MinecraftRcon:
             player_nick,
             "minecraft:instant_health",
             "1",
-            "255",
-        )
-        await self._request(
-            "effect",
-            "give",
-            player_nick,
-            "minecraft:regeneration",
             "10",
-            "2",
         )
 
     async def hunger(self, player_nick: str) -> None:
