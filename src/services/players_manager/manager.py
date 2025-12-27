@@ -57,3 +57,8 @@ class PlayerManager:
             if player["telegram_id"] == telegram_id:
                 nick = player["nick"]
         return nick
+
+    async def get_all_players_nicks(self) -> list[str]:
+        data = await self._read()
+        nicks = [player["nick"] for player in data["players"]]
+        return nicks
