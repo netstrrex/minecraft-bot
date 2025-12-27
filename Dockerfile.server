@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk
+FROM eclipse-temurin:8-jdk
 
 WORKDIR /usr/src/minecraft
 
@@ -8,4 +8,4 @@ RUN echo "eula=true" > /tmp/eula.txt
 
 EXPOSE 25565
 
-CMD ["/bin/bash", "-c", "cp -n /tmp/server.jar /usr/src/minecraft/ && cp -n /tmp/eula.txt /usr/src/minecraft/ && java -Xmx6144M -Xms6144M -jar /usr/src/minecraft/server.jar nogui"]
+CMD ["/bin/bash", "-c", "cp -n /tmp/server.jar /usr/src/minecraft/ && cp -n /tmp/eula.txt /usr/src/minecraft/ && java -Xmx3072M -Xms3072M -jar /usr/src/minecraft/server.jar nogui"]
