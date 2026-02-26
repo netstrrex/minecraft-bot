@@ -15,6 +15,9 @@ services:
       RCON_PASSWORD: "super_strong_password"
       RCON_PORT: 25575
 
+    networks:
+      - rcon_network
+
     volumes:
       - ./data:/data
       - ./mods:/mods
