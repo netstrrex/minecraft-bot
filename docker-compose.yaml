@@ -1,18 +1,23 @@
 services:
 
   minecraft_server:
-    container_name: minecraft_server
-    build:
-      context: .
-      dockerfile: Dockerfile.server
+    image: itzg/minecraft-server:java8
     ports:
       - "25565:25565"
       - "25575:25575"
+    environment:
+      EULA: "TRUE"
+      TYPE: "FORGE"
+      VERSION: "1.16.5"
+      MEMORY: "3G"
+      JVM_VERSION: 8
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "super_strong_password"
+      RCON_PORT: 25575
+
     volumes:
-      - ./data:/usr/src/minecraft
-    networks:
-      - rcon_network
-    restart: always
+      - ./data:/data
+      - ./mods:/mods
 
   rcon_bot:
     container_name: rcon_bot
